@@ -951,7 +951,7 @@ elif [ "$1" == "-noAD" ]; then
 	permissionsFix
 
 	# Download Meraki onto the computer
-	merakiSetup
+	#merakiSetup
 		
 	# Enable Firewall and Download Sophos
 	sophosSecurity
