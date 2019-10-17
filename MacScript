@@ -54,7 +54,6 @@ function reloadApps() {
 	brew cask install adobe-acrobat-reader
 	brew cask install microsoft-office
 	brew cask install zoomus
-	brew cask install zoomus-outlook-plugin
 	brew cask install teamviewer
 	brew cask install dropbox
 	brew cask install google-chrome
@@ -496,7 +495,6 @@ function permissionsFix() {
 	sudo xattr -d -r com.apple.quarantine /Applications/Microsoft\ Excel.app
 	sudo xattr -d -r com.apple.quarantine /Applications/Zoom.us.app
 	sudo xattr -d -r com.apple.quarantine /Applications/TeamViewer.app
-	sudo xattr -d -r com.apple.quarantine /Applications/ZoomOutlookPlugin
 	sudo xattr -d -r com.apple.quarantine /Applications/Dropbox.app
 }
 
