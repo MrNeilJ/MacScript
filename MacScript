@@ -54,7 +54,6 @@ function reloadApps() {
 	brew cask install adobe-acrobat-reader
 	brew cask install microsoft-office
 	brew cask install zoomus
-	brew cask install zoomus-outlook-plugin
 	brew cask install teamviewer
 	brew cask install dropbox
 	brew cask install google-chrome
@@ -256,10 +255,18 @@ function printerCheck() {
 
 		elif [ $siteCode == "LD" ]; then
 			echo "Adding London Printers"
-			lpadmin -p "LDPR01" -v "http://10.13.5.1" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
+			lpadmin -p "LDPR01" -v "http://10.40.5.1" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
 			echo "LDPR01 Added!"
-			lpadmin -p "LDPR02" -v "http://10.13.5.2" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
+			lpadmin -p "LDPR02" -v "http://10.40.5.2" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
 			echo "LDPR02 Added!"
+			lpadmin -p "LDPR03" -v "http://10.40.5.3" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
+			echo "LDPR03 Added!"
+			lpadmin -p "LDPR04" -v "http://10.40.5.4" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
+			echo "LDPR04 Added!"
+			lpadmin -p "LDPR05" -v "http://10.40.5.5" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
+			echo "LDPR05 Added!"
+			lpadmin -p "LDPR06" -v "http://10.40.5.6" -P "/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd" -o "APOptionalDuplexer=True" -E
+			echo "LDPR06 Added!"
 
 		elif [ $siteCode == "LA" ]; then
 			echo "Adding Los Angeles Printers"
@@ -492,7 +499,6 @@ function permissionsFix() {
 	sudo xattr -d -r com.apple.quarantine /Applications/Microsoft\ Excel.app
 	sudo xattr -d -r com.apple.quarantine /Applications/Zoom.us.app
 	sudo xattr -d -r com.apple.quarantine /Applications/TeamViewer.app
-	sudo xattr -d -r com.apple.quarantine /Applications/ZoomOutlookPlugin
 	sudo xattr -d -r com.apple.quarantine /Applications/Dropbox.app
 	sudo xattr -d -r com.apple.quarantine /Applications/Logi\ Options.app
 }
@@ -602,23 +608,6 @@ function addAdmin() {
 	sleep 1
 }
 
-function merakiSetup() {
-	echo ""
-	echo "Opening Safari for you to install Meraki onto the computer"
-	sleep 2
-	open https://m.meraki.com
-	read -p "Press Enter once you have added the computer to Meraki [ENTER]>: "
-	
-	echo ""
-	echo "Loading the second part of the Meraki installation"
-	sleep 2
-	curl -O https://n196.meraki.com/ci-downloads/121c309f9c83aa472e6bbd230cdf37c728582ab7/MerakiPCCAgent.pkg
-	open MerakiPCCAgent.pkg
-	echo ""
-	read -p "Press Enter once you have finished the second part of the Meraki installation [ENTER]>: "
-	osascript -e 'quit application "Safari"'
-}
-
 function secureTokenSetup() {
 	echo ""
 	echo "Checking secure token status."
@@ -724,9 +713,6 @@ elif [ "$1" == "-fullSetup" ]; then
 
 	# Fixes application permision once loaded
 	permissionsFix
-
-	# Download Meraki onto the computer
-	merakiSetup
 		
 	# Enable Firewall and Download Sophos
 	sophosSecurity
@@ -815,9 +801,6 @@ elif [ "$1" == "-ADJoin" ]; then
 
 	# Fixes application permision once loaded
 	permissionsFix
-
-	# Download Meraki onto the computer
-	merakiSetup
 		
 	# Enable Firewall and Download Sophos
 	sophosSecurity
@@ -954,9 +937,6 @@ elif [ "$1" == "-noAD" ]; then
 
 	# Fixes application permision once loaded
 	permissionsFix
-
-	# Download Meraki onto the computer
-	merakiSetup
 		
 	# Enable Firewall and Download Sophos
 	sophosSecurity
