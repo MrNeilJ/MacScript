@@ -355,14 +355,19 @@ function computerRename() {
 
 	if [[ $renameRequest == "y" || $renameRequest == "Y" ]]; then
 		echo ""
-		echo "What would you like to name the computer (typically this is first initial last name)?"
+		#echo "What would you like to name the computer (typically this is first initial last name)?"
+		echo "Type in the site code for this computer location"
 		printf ">: "
 		read compName
+
+		serialNum="$(ioreg -c IOPlatformExpertDevice -d 2 | awk -F\" '/IOPlatformSerialNumber/{print $(NF-1)}')"
+
+		compNameFull="${compName}-${serialNum}"
 		echo ""
 		echo "A pop up will appear twice to set the name, fill it in twice"
 		sleep 2
-		scutil --set ComputerName $compName
-		scutil --set LocalHostName $compName
+		scutil --set ComputerName $compNameFull
+		scutil --set LocalHostName $compNameFull
 	else 
 		echo "Skipping computer naming prompt"
 		sleep 1
