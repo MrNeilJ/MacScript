@@ -400,7 +400,7 @@ function activeDirectoryJoin() {
 			echo ""
 			
 			# Connect it to the AD
-			dsconfigad -a $compName -domain thetradedesk.com -u $adName -p $pwName -mobile enable -mobileconfirm disable -localhome enable
+			dsconfigad -a $compNameFull -domain thetradedesk.com -u $adName -p $pwName -mobile enable -mobileconfirm disable -localhome enable
 			echo ""
 			echo "Was the AD Join successful? (y/n) This is case sensitive"
 			printf ">: "
