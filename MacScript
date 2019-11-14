@@ -361,6 +361,7 @@ function computerRename() {
 		read compName
 
 		serialNum="$(ioreg -c IOPlatformExpertDevice -d 2 | awk -F\" '/IOPlatformSerialNumber/{print $(NF-1)}')"
+		sleep 1
 
 		compNameFull="${compName}-${serialNum}"
 		echo ""
