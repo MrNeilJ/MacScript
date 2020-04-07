@@ -58,6 +58,7 @@ function reloadApps() {
 	brew cask install dropbox
 	brew cask install google-chrome
 	brew cask install slack
+	brew cask install logitech-options
 
 	# See if user requires a remote desktop application
 	rdpSetup
@@ -352,6 +353,27 @@ function computerRename() {
 	printf ">: "
 	read renameRequest
 
+	#if [[ $renameRequest == "y" || $renameRequest == "Y" ]]; then
+		#echo ""
+		##echo "What would you like to name the computer (typically this is first initial last name)?"
+		#echo "Type in the site code for this computer location"
+		#printf ">: "
+		#read compName
+
+		#serialNum="$(ioreg -c IOPlatformExpertDevice -d 2 | awk -F\" '/IOPlatformSerialNumber/{print $(NF-1)}')"
+		#sleep 1
+
+		#compNameFull="${compName}-${serialNum}"
+		#echo ""
+		#echo "A pop up will appear twice to set the name, fill it in twice"
+		#sleep 2
+		#scutil --set ComputerName $compNameFull
+		#scutil --set LocalHostName $compNameFull
+	#else 
+		#echo "Skipping computer naming prompt"
+		#sleep 1
+		#echo ""
+	#fi
 	if [[ $renameRequest == "y" || $renameRequest == "Y" ]]; then
 		echo ""
 		echo "What would you like to name the computer (typically this is first initial last name)?"
@@ -463,6 +485,9 @@ function homebrewInstall() {
 	# Install Duti to set default applications
 	brew install duti
 
+	# Install the tap for Device Drivers
+	brew tap homebrew/cask-drivers
+
 	# Cleanup the unneeded files
 	brew cleanup
 	
@@ -496,6 +521,7 @@ function permissionsFix() {
 	sudo xattr -d -r com.apple.quarantine /Applications/Zoom.us.app
 	sudo xattr -d -r com.apple.quarantine /Applications/TeamViewer.app
 	sudo xattr -d -r com.apple.quarantine /Applications/Dropbox.app
+	sudo xattr -d -r com.apple.quarantine /Applications/Logi\ Options.app
 }
 
 function smartSheetsPrompt() {
