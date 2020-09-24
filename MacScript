@@ -384,6 +384,8 @@ function computerRename() {
 		sleep 2
 		scutil --set ComputerName $compName
 		scutil --set LocalHostName $compName
+		scutil --set HostName $compName
+
 	else 
 		echo "Skipping computer naming prompt"
 		sleep 1
