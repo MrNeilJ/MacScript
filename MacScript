@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Global Variables for simplicity
 SUDOCREDCACHED=1
 compName=""
@@ -380,10 +379,11 @@ function computerRename() {
 		printf ">: "
 		read compName
 		echo ""
-		echo "A pop up will appear twice to set the name, fill it in twice"
+		echo "A pop up will appear thrice to set the name, fill it in twice"
 		sleep 2
 		scutil --set ComputerName $compName
 		scutil --set LocalHostName $compName
+		scutil --set HostName $compName
 	else 
 		echo "Skipping computer naming prompt"
 		sleep 1
