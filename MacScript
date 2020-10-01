@@ -8,7 +8,7 @@ mydir=$(dirname "$0")
 adminPW=""
 currUser="$(whoami)"
 rdpSetupConfirm=0
-
+depSetupConfirm=1
 
 
 # Focus an app
@@ -19,6 +19,26 @@ function focusApp() {
         end tell
 EOT
 }
+
+function nonDepSetup() {
+	echo "Is this a non-DEP machine that needs Jamf user-initiated enrollment? (Y/N)"
+	printf ">: "
+	read depRequest
+	
+	if [[ $depRequest == "y" || $depRequest == "Y" ]]; then
+		depSetupConfirm=1
+		echo "Opening Jamf enrollment page and follow the prompts on the page"
+		sleep 1
+		
+		open https://thetradedesk.jamfcloud.com/enroll/
+
+		read -p "Press Enter when finished with the Jamf enrollment [ENTER]>: "
+
+	fi
+
+	sleep 3
+}
+
 
 function rdpSetup() {
 	echo "Does this user require a Remote Desktop Program? (y/n) (Applies to mobile device setups)"
@@ -379,7 +399,7 @@ function computerRename() {
 		printf ">: "
 		read compName
 		echo ""
-		echo "A pop up will appear thrice to set the name, fill it in twice"
+		echo "A pop up will appear three times to set the new name. Enter admin password and click Modify Configuration each time."
 		sleep 2
 		scutil --set ComputerName $compName
 		scutil --set LocalHostName $compName
@@ -805,8 +825,8 @@ elif [ "$1" == "-ADJoin" ]; then
 	# Keeps the admin password in a cache temporarily (or at least attempts to)
 	credentialCache
 
-	# Load Homebrew and utilities
-	homebrewInstall
+	# Load Homebrew and utilities <- Commented out as it occurs in the initial script now
+	#homebrewInstall
 
 	# Install the necessary applications
 	reloadApps
@@ -831,6 +851,8 @@ elif [ "$1" == "-ADJoin" ]; then
 	
 	# Update System
 	updateSystem
+
+
 	
 	
 elif [ "$1" == "unbind" ]; then
@@ -885,7 +907,21 @@ elif [ "$1" == "-setup" ]; then
 	echo "Type in the admin password"
 	printf ">: "
 	su admin -c "sh /Users/Shared/'${my_name}' cleanup"
-	
+
+	# See if we need to do a runthrough of the enrollment process
+	echo ""
+	nonDepSetup
+
+	sleep 3
+	echo "Running Jamf Recon, you will be prompted to type in the admin username / password"
+	#sudo jamf recon
+	su admin -c "sudo jamf recon"
+
+	sleep 2
+	echo "All done! Welcome to TTD!"
+
+                           
+                          
 elif [ "$1" == "-appLoad" ]; then
 	my_name=$(basename -- "$0")
 
