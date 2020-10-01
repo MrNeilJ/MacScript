@@ -404,6 +404,8 @@ function computerRename() {
 		scutil --set ComputerName $compName
 		scutil --set LocalHostName $compName
 		scutil --set HostName $compName
+
+
 	else 
 		echo "Skipping computer naming prompt"
 		sleep 1
@@ -738,7 +740,7 @@ elif [ "$1" == "-fullSetup" ]; then
 	credentialCache
 
 	# Load Homebrew and utilities
-	homebrewInstall
+	#homebrewInstall
 
 	# Install the necessary applications
 	reloadApps
