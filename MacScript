@@ -10,6 +10,9 @@ currUser="$(whoami)"
 rdpSetupConfirm=0
 depSetupConfirm=1
 
+# Jamf directory
+DIRECTORY = "/usr/local/jamf"
+
 
 # Focus an app
 function focusApp() {
@@ -21,11 +24,13 @@ EOT
 }
 
 function nonDepSetup() {
-	echo "Is this a non-DEP machine that needs Jamf user-initiated enrollment? (Y/N)"
-	printf ">: "
-	read depRequest
-	
-	if [[ $depRequest == "y" || $depRequest == "Y" ]]; then
+
+
+	if [ ! -d "$DIRECTORY" ]; then
+  		# Control will enter here if $DIRECTORY doesn't exist.
+		echo "This a non-DEP machine that needs Jamf user-initiated enrollment."
+		sleep 2
+
 		depSetupConfirm=1
 		echo "Opening Jamf enrollment page and follow the prompts on the page"
 		sleep 1
@@ -34,9 +39,17 @@ function nonDepSetup() {
 
 		read -p "Press Enter when finished with the Jamf enrollment [ENTER]>: "
 
+	
+	else
+		echo "This machine appears to have been previously enrolled to Jamf...continuing."
+
+		sleep 1
+
 	fi
 
-	sleep 3
+
+	sleep 1
+
 }
 
 
@@ -914,13 +927,14 @@ elif [ "$1" == "-setup" ]; then
 	echo ""
 	nonDepSetup
 
-	sleep 3
-	echo "Running Jamf Recon, you will be prompted to type in the admin username / password"
+	sleep 1
+	#echo "Running Jamf Recon, you will be prompted to type in the admin username / password"
 	#sudo jamf recon
-	su admin -c "sudo jamf recon"
+	echo "Enabling Jamf recon, type in admin password"
+	su admin -c "sh /Users/Shared/'${my_name}' cleanup"
 
 	sleep 2
-	echo "All done! Welcome to TTD!"
+	echo "All done! Welcome to TTD! Feel free to close this window at any time"
 
                            
                           
