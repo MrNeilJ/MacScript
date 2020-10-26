@@ -11,7 +11,7 @@ rdpSetupConfirm=0
 depSetupConfirm=1
 
 # Jamf directory
-DIRECTORY = "/usr/local/jamf"
+DIRECTORY="/usr/local/jamf"
 
 
 # Focus an app
