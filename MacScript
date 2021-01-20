@@ -83,14 +83,14 @@ function rdpSetup() {
 
 function reloadApps() {
 	# Install the necessary applications
-	brew cask install adobe-acrobat-reader
-	brew cask install microsoft-office
-	brew cask install zoomus
-	brew cask install teamviewer
-	brew cask install dropbox
-	brew cask install google-chrome
-	brew cask install slack
-	brew cask install logitech-options
+	brew install --cask --appdir=/Applications adobe-acrobat-reader
+	brew install --cask --appdir=/Applications microsoft-office
+	brew install --cask --appdir=/Applications zoomus
+	brew install --cask --appdir=/Applications teamviewer
+	brew install --cask --appdir=/Applications dropbox
+	brew install --cask --appdir=/Applications google-chrome
+	brew install --cask --appdir=/Applications slack
+	brew install --cask --appdir=/Applications logitech-options
 
 	# See if user requires a remote desktop application
 	rdpSetup
@@ -107,7 +107,8 @@ function updateSystem() {
 
 	sleep 1
 
-	echo "$adminPW" | sudo -S sh -c "softwareupdate -ia && reboot"
+	#echo "$adminPW" | sudo -S sh -c "softwareupdate -ia && reboot"
+	echo "$adminPW" | sudo -S sh -c "softwareupdate -ia"
 }
 
 function appValidate() {
@@ -867,6 +868,9 @@ elif [ "$1" == "-ADJoin" ]; then
 	# Update System
 	updateSystem
 
+	# Notify user to reboot the system if needed
+	echo "If an update has occurred, please make sure to reboot the system."
+
 
 	
 	
@@ -931,7 +935,7 @@ elif [ "$1" == "-setup" ]; then
 	#echo "Running Jamf Recon, you will be prompted to type in the admin username / password"
 	#sudo jamf recon
 	echo "Enabling Jamf recon, type in admin password"
-	su admin -c "sh /Users/Shared/'${my_name}' cleanup"
+	su admin -c "jamf recon"
 
 	sleep 2
 	echo "All done! Welcome to TTD! Feel free to close this window at any time"
@@ -1018,7 +1022,7 @@ elif [ "$1" == "-noAD" ]; then
 	printerCheck
 	
 	# Update System
-	updateSystem
+	#updateSystem
 
 elif [ "$1" == "-permissions" ]; then
 	# Fix Permissions
