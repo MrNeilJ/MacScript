@@ -934,8 +934,8 @@ elif [ "$1" == "-setup" ]; then
 	sleep 1
 	#echo "Running Jamf Recon, you will be prompted to type in the admin username / password"
 	#sudo jamf recon
-	echo "Enabling Jamf recon, type in admin password"
-	su admin -c "jamf recon"
+	echo "Enabling Jamf recon"
+	jamf recon
 
 	sleep 2
 	echo "All done! Welcome to TTD! Feel free to close this window at any time"
