@@ -507,7 +507,8 @@ function homebrewInstall() {
 	sleep 2
 
 	# Load homebrew onto computer temporarily
-	yes '' | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	#yes '' | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	yes '' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 	# Make sure home brew is updated
 	brew update
